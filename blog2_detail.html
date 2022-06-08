@@ -1,0 +1,35 @@
+{% extends 'base2.html' %}
+{% block page_content %}
+<div class="col-md-8 offset-md-2">
+    <h1>{{posts.title}}</h1>
+    <hr>
+    <small>
+       {{posts.created_on}} | category :
+    {% for items in posts.categories.all %}
+         <a href=" {% url 'blog2_category' items.name %}">{{items.name}}</a>
+    {%endfor%}
+    </small>
+    <p >{{ posts.body | linebreaks }}...</p>
+    <h3>Leave a comment : </h3>
+    <form action="/blog2/{{posts.pk}}/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{form.author}}
+        </div>
+        <br>
+         <div class="form-group">
+            {{form.body}}
+        </div>
+        <button type="submit" class="btn btn-primary">send</button>
+    </form>
+    <h3>comment</h3>
+    {% for comment in comments %}
+    <p>
+        On {{comment.created_on.date }}
+        <b>{{comment.author}}</b> wrote
+    </p>
+    <p>{{comment.body}}</p>
+    <hr>
+    {% endfor %}
+</div>
+{%endblock%}

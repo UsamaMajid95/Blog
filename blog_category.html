@@ -1,0 +1,18 @@
+{% extends 'base2.html' %}
+{% block page_content %}
+<div class="col-md-8 offset-md-2">
+   <h1>{{category | title}}</h1>
+   <hr>
+    {% for item in posts%}
+    <h2><a href=" {% url 'blog2_detail' item.pk %} "> {{item.title}}</a> </h2>
+    <small>
+        {{item.created_on}} | category:
+        {% for items in item.categories.all %}
+           <a href="{% url 'blog2_category' items.name %}">{{items.name}}</a>
+        {% endfor %}
+    </small>
+    <p>{{item.body | slice:"200"}}...</p>
+     {% endfor %}
+</div>
+{% endblock page_content %}
+
